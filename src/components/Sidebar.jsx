@@ -14,65 +14,10 @@ const Sidebar = ({ onHoverChange }) => {
   // Menu structure with nested subtopics
   const menuItems = [
     { icon: MdSpaceDashboard, label: "Dashboard", link: "/", subItems: [] },
-    {
-      icon: IoIosListBox,
-      label: "Incident",
-      subItems: [
-        {
-          label: "Register",
-          subItems: [
-            { label: "Individual", link: "/incident/register/individual" },
-            { label: "Bulk", link: "/incident/register/bulk" },
-          ],
-        },
-        { label: "Log", link: "/incident/log" },
-      ],
-    },
-    {
-      icon: FaGavel,
-      label: "DRC",
-      subItems: [
-        { label: "Mediation Board", link: "/drc/mediation-board" },
-        { label: "Period Extension", link: "/drc/period-extension" },
-        { label: "Log", link: "/drs/logs" },
-      ],
-    },
-    {
-      icon: MdOutlineMail,
-      label: "Letter of Demand",
-      subItems: [
-        {
-          label: "FTL LOD",
-          subItems: [
-            { label: "List", link: "/lod/ftl-list" },
-            { label: "Log", link: "/lod/ftl-log" },
-            { label: "Litigation",link: "/lod/ftl_lod/litigation/LitigationPage" },
-          ],
-        },
-        {
-          label: "Digital Signature LOD",
-          link: "/drc/F2",
-        },
-        {
-          label: "Digital Signature LOD ...",
-          subItems: [
-            { label: "LOD Log", link: "/lod/digital-signature-log" },
-            { label: "Final Reminder Log", link: "/lod/final-reminder-log" },
-            { label: "Dispute", link: "/drc/Dispute_Log" },
-          ],
-        },
-      ],
-    },
-    {
-      icon: MdMonitor,
-      label: "Settlement",
-      subItems: [
-        {
-          label: "Monitor Settlement",
-          subItems: [{ label: "Adjustments", link: "/settlement/adjustments" }],
-        },
-      ],
-    },
+   
+   
+    
+  
     { 
       icon: Si2Fas, 
       label: "Master", 
@@ -93,10 +38,7 @@ const Sidebar = ({ onHoverChange }) => {
           label: "Ro",
           subItems: [{label: "Ro List", link: "/config/ro-list"}], 
         },
-        {
-          label: "config",
-          subItems: [{label: "config List", link: "/config"}], 
-        },
+       
         {
           label: "Service",
           subItems: [{label: "Service List", link: "/config/service-types-list"}], 
