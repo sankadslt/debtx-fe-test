@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { getAllServices, changeServiceStatus } from "../../services/serviceType/ServiceTypeService";
+import {
+  getAllServices,
+  changeServiceStatus,
+} from "../../services/serviceType/ServiceTypeService";
 import { RegisterServiceType } from "../../services/service_type/servicetype";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
-import activeIcon from "../../assets/images/active.svg";
-import deactiveIcon from "../../assets/images/deactive.svg";
+import activeIcon from "../../assets/images/Services/Services/Active.png";
+import deactiveIcon from "../../assets/images/Services/Services/Inactive.png";
 import save from "../../assets/images/save.svg";
 import edit_info from "../../assets/images/edit-info.svg";
 import Swal from "sweetalert2";
@@ -56,6 +59,16 @@ const ServiceTypesList = () => {
 
     try {
       await RegisterServiceType(serviceType);
+      const newService = {
+        serviceId: "N/A",
+        serviceType: serviceType,
+        status: "Inactive",
+        isEditing: false,
+        editedStatus: "Inactive",
+      };
+
+      setData((prevData) => [...prevData, newService]);
+
       Swal.fire({
         icon: "success",
         title: "Success",

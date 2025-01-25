@@ -4,9 +4,9 @@ import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDRCDetailsWithServices } from "../../services/drc/DRCService";
 import more_info from "../../assets/images/more-info.svg";
-import activeIcon from "../../assets/images/active.svg";
-import inactiveIcon from "../../assets/images/deactive.svg";
-import terminateIcon from "../../assets/images/terminate.svg";
+import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
+import inactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
+import terminateIcon from "../../assets/images/DRC/Status_DRC list/Terminated.png";
 import user_add from "../../assets/images/user-add.svg";
 
 const DrcList = () => {

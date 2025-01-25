@@ -1,16 +1,11 @@
-
-
-
-// Code V2 Now showing last status of rtom which is in the rtoms_for_ro array.
-
 import { useState, useEffect } from "react";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { Link, useParams } from "react-router-dom";
 import { GetRODetailsByID } from "../../services/Ro/RO";
 import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import edit_info from "../../assets/images/edit-info.svg";
-import activeIcon from "../../assets/images/active.svg";
-import deactiveIcon from "../../assets/images/deactive.svg";
+import activeIcon from "../../assets/images/RO/RO/Active.png";
+import deactiveIcon from "../../assets/images/RO/RO/Inactive.png";
 
 const RODetails = () => {
   const { roId } = useParams();  
@@ -77,13 +72,15 @@ const RODetails = () => {
       </div>
       <div className="flex justify-center">
         <div className={`${GlobalStyle.cardContainer} p-4 mb-8`}>
-          <div className="flex justify-end">
-            <Link to={`/config/ro-edit-details/${roId}`}>
-              <button>
-                <img src={edit_info} title="Edit" className="w-6 h-6" />
-              </button>
-            </Link>
-          </div>
+          {roDetails.ro_status !== "Terminate" && (
+            <div className="flex justify-end">
+              <Link to={`/config/ro-edit-details/${roId}`}>
+                <button>
+                  <img src={edit_info} title="Edit" className="w-6 h-6" />
+                </button>
+              </Link>
+            </div>
+          )}
           <table className="mb-8 w-fit">
             <tbody>
               <tr>
@@ -196,16 +193,16 @@ const RODetails = () => {
         </div>
       </div>
 
-      {/* End Button */}
-      <div className="flex justify-end mb-4">
-        <Link to={`/config/ro-end/${roId}`}>
-          <button className={GlobalStyle.buttonPrimary}>
-            End
-          </button>
-        </Link>
-      </div>
+      {roDetails.ro_status !== "Terminate" && (
+        <div className="flex justify-end mb-4">
+          <Link to={`/config/ro-end/${roId}`}>
+            <button className={GlobalStyle.buttonPrimary}>
+              End
+            </button>
+          </Link>
+        </div>
+      )}
 
-      {/* Log History Button */}
       <div className="flex justify-start">
         <button
           className={`${GlobalStyle.buttonPrimary}`}

@@ -3,8 +3,8 @@ import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { useParams, useNavigate } from "react-router-dom";
 import { GetRODetailsByID, SuspendRO } from "../../services/Ro/RO";
 import Swal from "sweetalert2";
-import activeIcon from "../../assets/images/active.svg";
-import deactiveIcon from "../../assets/images/deactive.svg";
+import activeIcon from "../../assets/images/RO/RO/Active.png";
+import deactiveIcon from "../../assets/images/RO/RO/Inactive.png";
 
 const RoEnd = () => {
   const { roId } = useParams();

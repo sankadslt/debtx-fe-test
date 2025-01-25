@@ -401,44 +401,40 @@ const RoEditDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {services.map((service, index) => (
-                    <tr
-                      key={index}
-                      className={`${
-                        index % 2 === 0
-                          ? "bg-white bg-opacity-75"
-                          : "bg-gray-50 bg-opacity-50"
-                      } border-b`}
-                    >
-                      <td className={GlobalStyle.tableData}>{service.name}</td>
-                      <td className={GlobalStyle.tableData}>
-                        {service.changeOn}
-                      </td>
-                      <td className={GlobalStyle.tableData}>
-                        <label className="inline-flex relative items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="sr-only peer"
-                            checked={service.enabled}
-                            onChange={() => toggleService(service.id)}
-                          />
-                          <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                        </label>
-                      </td>
-                      <td className={GlobalStyle.tableData}>
-                        {service.isNew && (
-                          <button onClick={() => removeService(service.id)}>
-                            <img
-                              src={remove}
-                              title="Remove"
-                              className="w-6 h-6"
-                            />
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+  {services.map((service, index) => (
+    <tr
+      key={index}
+      className={`${
+        index % 2 === 0
+          ? "bg-white bg-opacity-75"
+          : "bg-gray-50 bg-opacity-50"
+      } border-b`}
+    >
+      {/* Display RTOM Area */}
+      <td className={GlobalStyle.tableData}>{service.name}</td>
+
+      {/* Display Change On */}
+      <td className={GlobalStyle.tableData}>{service.changeOn}</td>
+
+      {/* Empty cell for alignment */}
+      <td className={GlobalStyle.tableData}></td>
+
+      {/* Display Remove Icon */}
+      <td className={GlobalStyle.tableData}>
+        {service.isNew && (
+          <button onClick={() => removeService(service.id)}>
+            <img
+              src={remove}
+              title="Remove"
+              className="w-6 h-6"
+            />
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
               </table>
             </div>
           </div>

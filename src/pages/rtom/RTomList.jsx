@@ -246,9 +246,9 @@ import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { Link } from "react-router-dom";
 import user_add from "../../assets/images/user-add.svg";
 import more_info from "../../assets/images/more-info.svg";
-import activeIcon from "../../assets/images/active.svg";
-import inactiveIcon from "../../assets/images/deactive.svg";
-import terminateIcon from "../../assets/images/terminate.svg";
+import activeIcon from "../../assets/images/RTOM/RTOM/Active.png";
+import inactiveIcon from "../../assets/images/RTOM/RTOM/Inactive.png";
+import terminateIcon from "../../assets/images/RTOM/RTOM/Terminated.png";
 import { getRTOMDetails } from "../../services/rtom/RtomService";
 
 const RTomList = () => {

@@ -303,7 +303,7 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import edit_info from "../../assets/images/edit-info.svg"
+import edit_info from "../../assets/images/edit-info.svg";
 import { getRTOMDetailsById } from "../../services/rtom/RtomService";
 
 const RTomInfo = () => {
@@ -315,14 +315,13 @@ const RTomInfo = () => {
   const [endDate, setEndDate] = useState(""); 
   const [remark, setRemark] = useState("");
   const [isEndButtonVisible, setIsEndButtonVisible] = useState(true);
+  const [isTerminated, setIsTerminated] = useState(false);  
   const [rtomDetails, setRtomDetails] = useState(null);
   const [logHistory, setLogHistory] = useState([]);
-  // const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   
   const rowsPerPage = 7;
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -330,12 +329,12 @@ const RTomInfo = () => {
         const data = await getRTOMDetailsById(rtomId);
 
         const formattedDetails = {
-          // rtomId: data.rtom_id || "N/A",
           areaName: data.area_name || "N/A",
           rtomAbbreviation: data.rtom_abbreviation || "N/A",
           contactNumber: data.rtom_contact_number || "N/A",
           faxNumber: data.rtom_fax_number || "N/A",
-          addedDate: data.created_dtm || "N/A",
+          addedDate: data.createdAt || "N/A",
+          rtomStatus: data.rtom_status || "N/A", // RTOM status field
         };
 
         const formattedLogHistory = data.updated_rtom.map((item) => ({
@@ -346,16 +345,17 @@ const RTomInfo = () => {
 
         setRtomDetails(formattedDetails);
         setLogHistory(formattedLogHistory);
+        setIsTerminated(formattedDetails.rtomStatus === "Terminate");  // Update the termination status based on rtom_status
         setLoading(false);
       } catch (error) {
-        setError("Failed to fetch RTOM details. Please try again later.",error.message);
+        setError("Failed to fetch RTOM details. Please try again later.");
         setLoading(false);
       }
     };
 
     fetchData();
   }, [rtomId]);
-  
+
   const filteredLogHistory = logHistory.filter((row) =>
     Object.values(row)
       .join(" ")
@@ -388,12 +388,6 @@ const RTomInfo = () => {
     });
   };
 
-  {error && (
-    <div className="text-red-500 text-center mb-4">
-      <p>{error}</p>
-    </div>
-  )}
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
@@ -407,11 +401,13 @@ const RTomInfo = () => {
         {/* Card Container */}
         <div className={`${GlobalStyle.cardContainer} p-4`}>
           <div className="flex mb-4 justify-end">
+          {!isTerminated && (
             <Link to={`/config/rtom-edit-details/${rtomId}`}>
               <button>
                 <img src={edit_info} title="Edit" className="w-6 h-6" />
               </button>
             </Link>
+          )}
           </div>
 
           <table className="mb-8 w-full">
@@ -486,15 +482,15 @@ const RTomInfo = () => {
       </div>
 
       <div className="flex flex-col">
-        {/* End Button */}
-        {isEndButtonVisible && (
+        {/* Hide End Button if RTOM is terminated */}
+        {!isTerminated && (
           <div className="flex justify-end mb-4">
             <Link to={`/config/rtom-end/${rtomId}`}>
               <button
                 className={`${GlobalStyle.buttonPrimary}`}
                 onClick={() => {
                   setNegotiation("end");
-                  setIsEndButtonVisible(false); // Hide the "End" button
+                  setIsEndButtonVisible(false);
                 }}
               >
                 End
@@ -535,15 +531,15 @@ const RTomInfo = () => {
           </div>
         )}
 
-        {/* Log History Button */}
-        <div className="flex justify-start mb-4">
-          <button
-            className={`${GlobalStyle.buttonPrimary}`}
-            onClick={() => setShowPopup(true)}
-          >
-            Log History
-          </button>
-        </div>
+          {/* Log History button */}
+          <div className="flex justify-start mb-4">
+            <button
+              className={`${GlobalStyle.buttonPrimary}`}
+              onClick={() => setShowPopup(true)}
+            >
+              Log History
+            </button>
+          </div>
       </div>
 
       {/* Log History Popup */}

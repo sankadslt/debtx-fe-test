@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDrcDetailsWithServicesById, endDRC } from "../../services/drc/DRCService";
-import activeIcon from "../../assets/images/active.svg";
-import deactiveIcon from "../../assets/images/deactive.svg";
+import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
+import deactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
 import Swal from "sweetalert2";
 
 const DrcEnd = () => {
