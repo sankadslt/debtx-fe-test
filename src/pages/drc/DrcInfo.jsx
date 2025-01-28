@@ -176,7 +176,7 @@ const DrcInfo = () => {
     )}
 
       {/* Log History Button */}
-      <div className="flex justify-start">
+      <div className="flex justify-start mb-4">
         <button
           className={`${GlobalStyle.buttonPrimary}`}
           onClick={() => setShowPopup(true)}
@@ -274,6 +274,15 @@ const DrcInfo = () => {
           </div>
         </div>
       )}
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+        <Link to="/config/drc-list">
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

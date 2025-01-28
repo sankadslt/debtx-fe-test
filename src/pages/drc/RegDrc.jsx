@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 import { registerDRCWithServices } from "../../services/drc_service/DRC_Service";
 import { getActiveServiceDetails } from "../../services/serviceType/ServiceTypeService";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
@@ -282,6 +283,15 @@ const RegDrc = () => {
           {error && <div className="text-red-500 mt-4">{error}</div>}
           {success && <div className="text-green-500 mt-4">{success}</div>}
         </div>
+      </div>
+      
+       {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+        <Link to="/config/drc-list">
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );

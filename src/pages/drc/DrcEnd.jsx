@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDrcDetailsWithServicesById, endDRC } from "../../services/drc/DRCService";
 import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
@@ -210,6 +210,15 @@ const DrcEnd = () => {
           End
         </button>
       </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+          <Link to="/config/drc-list">
+            <button className={`${GlobalStyle.buttonPrimary}`}>
+              Back
+            </button>
+          </Link>
+        </div>
     </div>
   );
 };

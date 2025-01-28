@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate , Link } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDrcDetailsWithServicesById } from "../../services/drc/DRCService";
 import { getActiveServiceDetails } from "../../services/serviceType/ServiceTypeService";
@@ -383,7 +383,16 @@ const DrcEditDetails = () => {
             </button>
           </div>
         </div>
-      </div>
+        </div>
+
+        {/* Back Button */} 
+        <div className="flex justify-start mb-5">
+          <Link to="/config/drc-info">
+            <button className={`${GlobalStyle.buttonPrimary}`}>
+              Back
+            </button>
+          </Link>
+        </div>
     </div>
   );
 };
