@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDrcDetailsWithServicesById, getRemarkDetailsByDRCId } from "../../services/drc/DRCService";
-import activeIcon from "../../assets/images/active.svg";
-import deactiveIcon from "../../assets/images/deactive.svg";
+import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
+import deactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
 import edit_info from "../../assets/images/edit-info.svg";
 import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
@@ -15,10 +15,11 @@ const DrcInfo = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [remarkDetails, setRemarkDetails] = useState([]);
+  const [isEndButtonVisible, setIsEndButtonVisible] = useState(true);
+  const [isTerminated, setIsTerminated] = useState(false);  
   const rowsPerPage = 7;
   const [setError] = useState(null);
 
-  // Filter and paginate remark data for the log history
   const filteredLogHistory = remarkDetails.filter((row) =>
     Object.values(row)
       .join(" ")
@@ -46,6 +47,8 @@ const DrcInfo = () => {
         const drcData = await getDrcDetailsWithServicesById(drcId);
         setDrcDetails(drcData);
         setServices(drcData.services_of_drc || []);
+        setIsTerminated(drcData.rtomStatus === "Terminate");  
+
       } catch (error) {
         console.error("Error initializing data:", error.message);
         setError("Failed to load data. Please try again.");
@@ -77,12 +80,15 @@ const DrcInfo = () => {
       <div className="flex w-full justify-center">
         <div className={`${GlobalStyle.cardContainer} p-4`}>
           <div className="flex justify-end">
+            {!isTerminated &&(
             <Link to={`/config/drc-edit-details/${drcId}`}>
               <button>
                 <img src={edit_info} title="Edit" className="w-6 h-6" />
               </button>
             </Link>
+            )}
           </div>
+
           <table className="mb-8 w-full">
             <tbody>
               <tr>
@@ -154,15 +160,23 @@ const DrcInfo = () => {
         </div>
       </div>
 
-      {/* End Button */}
+      {/* Hide End Button if RTOM is terminated */}
+      {!isTerminated && (
       <div className="flex justify-end ">
         <Link to={`/config/drc-end/${drcId}`}>
-          <button className={`${GlobalStyle.buttonPrimary}`}>End</button>
+          <button className={`${GlobalStyle.buttonPrimary}`}
+          onClick={() => {
+            setIsEndButtonVisible(false);
+          }}
+          >
+            End
+          </button>
         </Link>
       </div>
+    )}
 
       {/* Log History Button */}
-      <div className="flex justify-start">
+      <div className="flex justify-start mb-4">
         <button
           className={`${GlobalStyle.buttonPrimary}`}
           onClick={() => setShowPopup(true)}
@@ -260,6 +274,15 @@ const DrcInfo = () => {
           </div>
         </div>
       )}
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+        <Link to="/config/drc-list">
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

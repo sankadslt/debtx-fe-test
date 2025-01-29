@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate , Link } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDrcDetailsWithServicesById } from "../../services/drc/DRCService";
 import { getActiveServiceDetails } from "../../services/serviceType/ServiceTypeService";
@@ -174,7 +174,7 @@ const DrcEditDetails = () => {
       });
     }
   };
-  
+
   return (
     <div className={GlobalStyle.fontPoppins}>
       <div className={`${GlobalStyle.headingLarge} mb-4`}>
@@ -255,7 +255,6 @@ const DrcEditDetails = () => {
                     className={`${GlobalStyle.remark} w-64`}
                     rows="2"
                     onChange={(e) => setRemark(e.target.value)}
-
                   ></textarea>
                 </td>
               </tr>
@@ -287,7 +286,9 @@ const DrcEditDetails = () => {
                         {service?.service_type}
                       </td>
                       <td className={GlobalStyle.tableData}>
-                        {service?.status_change_dtm
+                        {service?.isNew
+                          ? "N/A"
+                          : service?.status_change_dtm
                           ? new Date(
                               service.status_change_dtm
                             ).toLocaleDateString()
@@ -296,30 +297,7 @@ const DrcEditDetails = () => {
                       <td
                         className={`${GlobalStyle.tableData} flex justify-center gap-2`}
                       >
-                        {/* Toggle Button */}
-                        <div className="flex items-center justify-center">
-                          <div
-                            className={`w-11 h-6 rounded-full relative cursor-pointer ${
-                              service?.drc_service_status === "Active"
-                                ? "bg-green-600"
-                                : "bg-gray-500"
-                            }`}
-                            onClick={() =>
-                              toggleServiceStatus(service.service_id)
-                            } // Pass `service.service_id`
-                          >
-                            <div
-                              className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
-                                service?.drc_service_status === "Active"
-                                  ? "translate-x-full"
-                                  : ""
-                              }`}
-                            ></div>
-                          </div>
-                        </div>
-
-                        {/* Remove Button */}
-                        {service?.isNew && (
+                        {service?.isNew ? (
                           <button onClick={() => removeService(service.id)}>
                             <img
                               src={remove}
@@ -328,6 +306,27 @@ const DrcEditDetails = () => {
                               className="w-6 h-6"
                             />
                           </button>
+                        ) : (
+                          <div className="flex items-center justify-center">
+                            <div
+                              className={`w-11 h-6 rounded-full relative cursor-pointer ${
+                                service?.drc_service_status === "Active"
+                                  ? "bg-green-600"
+                                  : "bg-gray-500"
+                              }`}
+                              onClick={() =>
+                                toggleServiceStatus(service.service_id)
+                              }
+                            >
+                              <div
+                                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                                  service?.drc_service_status === "Active"
+                                    ? "translate-x-full"
+                                    : ""
+                                }`}
+                              ></div>
+                            </div>
+                          </div>
                         )}
                       </td>
                     </tr>
@@ -384,7 +383,16 @@ const DrcEditDetails = () => {
             </button>
           </div>
         </div>
-      </div>
+        </div>
+
+        {/* Back Button */} 
+        <div className="flex justify-start mb-5">
+          <Link to="/config/drc-info">
+            <button className={`${GlobalStyle.buttonPrimary}`}>
+              Back
+            </button>
+          </Link>
+        </div>
     </div>
   );
 };

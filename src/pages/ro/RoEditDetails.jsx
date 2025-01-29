@@ -1,13 +1,12 @@
-
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
-import Swal from "sweetalert2"; 
+import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import add from "../../assets/images/add.svg";
 import remove from "../../assets/images/remove.svg";
 import google from "../../assets/images/google.png";
 import facebook from "../../assets/images/facebook.png";
-import { fetchRODataByID, editRecoveryOfficer } from "../../services/Ro/RO"; 
+import { fetchRODataByID, editRecoveryOfficer } from "../../services/Ro/RO";
 import { getAllActiveRTOMs } from "../../services/rtom/RtomService";
 
 const RoEditDetails = () => {
@@ -30,8 +29,8 @@ const RoEditDetails = () => {
     loginmethod: "",
   });
   const { roId } = useParams();
-  const navigate = useNavigate(); 
-  const roidentity = parseInt(roId, 10); 
+  const navigate = useNavigate();
+  const roidentity = parseInt(roId, 10);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -66,9 +65,17 @@ const RoEditDetails = () => {
             return {
               id: item.rtom_id,
               name: item.name,
-              changeOn: lastRTOMStatus ? new Date(lastRTOMStatus.rtoms_for_ro_status_date).toLocaleDateString() : "",
-              enabled: lastRTOMStatus ? lastRTOMStatus.status === "Active" : false,
-              initialEnabled: lastRTOMStatus ? lastRTOMStatus.status === "Active" : false,
+              changeOn: lastRTOMStatus
+                ? new Date(
+                    lastRTOMStatus.rtoms_for_ro_status_date
+                  ).toLocaleDateString()
+                : "",
+              enabled: lastRTOMStatus
+                ? lastRTOMStatus.status === "Active"
+                : false,
+              initialEnabled: lastRTOMStatus
+                ? lastRTOMStatus.status === "Active"
+                : false,
               isNew: false,
             };
           }) || []
@@ -118,7 +125,6 @@ const RoEditDetails = () => {
           title: "Warning",
           text: "This RTOM area is already in the table.",
           confirmButtonColor: "#f1c40f",
-
         });
         return;
       }
@@ -207,10 +213,8 @@ const RoEditDetails = () => {
         text: response.data.message || "Data updated successfully!",
         confirmButtonColor: "#28a745",
       }).then(() => {
-        navigate(`/config/ro-details/${roId}`);// Navigate to relevant page
+        navigate(`/config/ro-details/${roId}`); // Navigate to relevant page
       });
-    
-
     } catch (error) {
       console.error("Error updating recovery officer profile:", error);
       Swal.fire({
@@ -231,7 +235,6 @@ const RoEditDetails = () => {
   const handleCheckboxChange = () => {
     setCheckboxStatus(!checkboxStatus);
   };
-
 
   return (
     <div className={GlobalStyle.fontPoppins}>
@@ -401,39 +404,57 @@ const RoEditDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {services.map((service, index) => (
+                  {services?.map((service, index) => (
                     <tr
-                      key={index}
+                      key={service?.id}
                       className={`${
                         index % 2 === 0
                           ? "bg-white bg-opacity-75"
                           : "bg-gray-50 bg-opacity-50"
                       } border-b`}
                     >
-                      <td className={GlobalStyle.tableData}>{service.name}</td>
+                      {/* RTOM Area */}
+                      <td className={GlobalStyle.tableData}>{service?.name}</td>
+
+                      {/* Change On */}
                       <td className={GlobalStyle.tableData}>
-                        {service.changeOn}
+                        {service?.isNew
+                          ? "N/A"
+                          : service?.changeOn
+                          ? new Date(service.changeOn).toLocaleDateString()
+                          : "N/A"}
                       </td>
-                      <td className={GlobalStyle.tableData}>
-                        <label className="inline-flex relative items-center cursor-pointer">
-                          <input
-                            type="checkbox"
-                            className="sr-only peer"
-                            checked={service.enabled}
-                            onChange={() => toggleService(service.id)}
-                          />
-                          <div className="w-11 h-6 bg-gray-500 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                        </label>
-                      </td>
-                      <td className={GlobalStyle.tableData}>
-                        {service.isNew && (
+
+                      {/* Toggle Status */}
+                      <td
+                        className={`${GlobalStyle.tableData} flex justify-center gap-2`}
+                      >
+                        {service?.isNew ? (
                           <button onClick={() => removeService(service.id)}>
                             <img
                               src={remove}
                               title="Remove"
+                              alt="Remove Service"
                               className="w-6 h-6"
                             />
                           </button>
+                        ) : (
+                          <div className="flex items-center justify-center">
+                            <div
+                              className={`w-11 h-6 rounded-full relative cursor-pointer ${
+                                service?.enabled
+                                  ? "bg-green-600"
+                                  : "bg-gray-500"
+                              }`}
+                              onClick={() => toggleService(service.id)}
+                            >
+                              <div
+                                className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white transition-transform ${
+                                  service?.enabled ? "translate-x-full" : ""
+                                }`}
+                              ></div>
+                            </div>
+                          </div>
                         )}
                       </td>
                     </tr>

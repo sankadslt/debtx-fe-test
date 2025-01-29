@@ -4,9 +4,9 @@ import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getDRCDetailsWithServices } from "../../services/drc/DRCService";
 import more_info from "../../assets/images/more-info.svg";
-import activeIcon from "../../assets/images/active.svg";
-import inactiveIcon from "../../assets/images/deactive.svg";
-import terminateIcon from "../../assets/images/terminate.svg";
+import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
+import inactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
+import terminateIcon from "../../assets/images/DRC/Status_DRC list/Terminated.png";
 import user_add from "../../assets/images/user-add.svg";
 
 const DrcList = () => {
@@ -185,6 +185,8 @@ const DrcList = () => {
                 <th className={GlobalStyle.tableHeader}>DRC Name</th>
                 <th className={GlobalStyle.tableHeader}>Contact No.</th>
                 <th className={GlobalStyle.tableHeader}>Service Count</th>
+                <th className={GlobalStyle.tableHeader}>Ro Count</th>
+                <th className={GlobalStyle.tableHeader}>RTOM Count</th>
                 <th className={GlobalStyle.tableHeader}></th>
               </tr>
             </thead>
@@ -228,6 +230,8 @@ const DrcList = () => {
                   </td>
                   <td className={GlobalStyle.tableData}>{row.contactNo}</td>
                   <td className={GlobalStyle.tableData}>{row.serviceCount}</td>
+                  <td className={GlobalStyle.tableData}>-</td>
+                  <td className={GlobalStyle.tableData}>-</td>
                   <td className={GlobalStyle.tableData}>
                     <div className="flex gap-4 items-center">
                       <Link to={`/config/drc-info/${row.drcId}`}>
@@ -236,6 +240,9 @@ const DrcList = () => {
                           title="More Info"
                           className="w-6 h-6"
                         />
+                      </Link>
+                      <Link to={`/`}>
+                        <button className={GlobalStyle.buttonPrimary}>CL</button>
                       </Link>
                     </div>
                   </td>
