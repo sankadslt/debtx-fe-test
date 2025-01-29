@@ -959,6 +959,7 @@
 
 
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { registerRecoveryOfficer } from "../../services/Ro/RO";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import add from "../../assets/images/add.svg";
@@ -1272,6 +1273,15 @@ const RecoveryOfficerForm = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+        <Link to="/config/ro-list">
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );

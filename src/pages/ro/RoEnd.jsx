@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { GetRODetailsByID, SuspendRO } from "../../services/Ro/RO";
 import Swal from "sweetalert2";
 import activeIcon from "../../assets/images/RO/RO/Active.png";
@@ -226,6 +226,15 @@ const RoEnd = () => {
             End
           </button>
         </div>
+      </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/ro-details/${roId}`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import add from "../../assets/images/add.svg";
@@ -507,6 +507,15 @@ const RoEditDetails = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/ro-details/${roId}`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );
