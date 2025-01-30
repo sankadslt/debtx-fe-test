@@ -147,7 +147,7 @@
 
 
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { getRTOMDetailsById, suspendRTOM } from "../../services/rtom/RtomService";
 import Swal from "sweetalert2";
@@ -386,6 +386,15 @@ const RtomEnd = () => {
             End
           </button>
         </div>
+      </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/rtom-info/${rtomId}`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );

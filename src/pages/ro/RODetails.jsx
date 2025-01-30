@@ -203,7 +203,7 @@ const RODetails = () => {
         </div>
       )}
 
-      <div className="flex justify-start">
+      <div className="flex justify-start mb-4">
         <button
           className={`${GlobalStyle.buttonPrimary}`}
           onClick={() => setShowPopup(true)}
@@ -296,6 +296,15 @@ const RODetails = () => {
           </div>
         </div>
       )}
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+        <Link to="/config/ro-list">
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

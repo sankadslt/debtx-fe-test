@@ -627,6 +627,15 @@ const RTomInfo = () => {
           </div>
         </div>
       )}
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/rtom-list`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

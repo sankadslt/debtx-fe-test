@@ -584,6 +584,7 @@
 
 
   import { useState } from "react";
+  import { Link } from "react-router-dom";
   import GlobalStyle from "../../assets/prototype/GlobalStyle";
   import { registerRTOM } from "../../services/rtom/RtomService";
   import Swal from "sweetalert2";
@@ -777,6 +778,15 @@
             </form>
           </div>
         </div>
+
+        {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/rtom-list`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
+      </div>
       </div>
     );
   };

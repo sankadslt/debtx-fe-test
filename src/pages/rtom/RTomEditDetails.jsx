@@ -1,5 +1,5 @@
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
@@ -244,6 +244,15 @@ const RTomEditDetails = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Back Button */} 
+      <div className="flex justify-start mb-5">
+      <Link to={`/config/rtom-info/${rtomId}`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>
+            Back
+          </button>
+        </Link>
       </div>
     </div>
   );
