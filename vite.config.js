@@ -5,3 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 })
+
+// import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
+// import deactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
