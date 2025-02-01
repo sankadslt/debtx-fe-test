@@ -11,6 +11,7 @@ const RegDrc = () => {
   const [drcName, setDrcName] = useState("");
   const [businessRegistration, setBusinessRegistration] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [activeServices, setActiveServices] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -82,7 +83,7 @@ const RegDrc = () => {
   };
 
   const handleSubmit = async () => {
-    if (!drcName || !businessRegistration || !contactNumber) {
+    if (!drcName || !businessRegistration || !contactNumber || !email) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -116,6 +117,8 @@ const RegDrc = () => {
       DRC_Name: drcName,
       DRC_Business_Registration_Number: businessRegistration,
       Contact_Number: contactNumber,
+
+      DRC_Email: email,
       Services: tableData.map((item) => item.serviceId),
     };
 
@@ -133,6 +136,7 @@ const RegDrc = () => {
       setDrcName("");
       setBusinessRegistration("");
       setContactNumber("");
+      setEmail("");
       setTableData([]);
     } catch (err) {
       const errorMsg =
@@ -201,6 +205,20 @@ const RegDrc = () => {
                     onChange={(e) => setContactNumber(e.target.value)}
                     maxLength="10"
                     required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label className={`${GlobalStyle.headingMedium}`}>DRC Email</label>
+                </td>
+                <td> : </td>
+                <td>
+                  <input
+                    type="email"
+                    className={`${GlobalStyle.inputText}`}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </td>
               </tr>
