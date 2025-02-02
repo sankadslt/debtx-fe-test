@@ -5,6 +5,7 @@ import GlobalStyle from "../../assets/prototype/GlobalStyle";
 import { fetchRODetails, fetchRODataByDRC } from "../../services/Ro/RO";
 import activeIcon from "../../assets/images/RO/RO/Active.png";
 import deactiveIcon from "../../assets/images/RO/RO/Inactive.png";
+import terminatedIcon from "../../assets/images/RO/RO/Terminated.png";
 import more_info from "../../assets/images/more-info.svg";
 import user_add from "../../assets/images/user-add.svg";
 import { fetchActiveDRCDetails } from "../../services/drc/DRCService";
@@ -208,7 +209,7 @@ const ROList = () => {
                 <td className={GlobalStyle.tableData}>
                   <div className="flex items-center justify-center gap-2">
                     <img
-                      src={getLastStatus(ro.ro_status) === "Active" ? activeIcon : deactiveIcon}
+                      src={getLastStatus(ro.ro_status) === "Active" ? activeIcon : (ro.ro_status) === "Inactive" ?deactiveIcon : terminatedIcon}
                       alt={getLastStatus(ro.ro_status)}
                       className="w-5 h-5"
                       title={getLastStatus(ro.ro_status)}
