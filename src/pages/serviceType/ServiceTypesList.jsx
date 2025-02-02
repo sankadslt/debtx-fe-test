@@ -74,14 +74,20 @@ const ServiceTypesList = () => {
         title: "Success",
         text: "Service Type registered successfully!",
         confirmButtonColor: "#28a745",
+        timer: 5000, //5 seconds
+        timerProgressBar: true,
       });
       setServiceType("");
+      window.location.reload();
+
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Failed to register Service Type. Please try again.",
         confirmButtonColor: "#d33",
+        timer: 5000, //5 seconds
+        timerProgressBar: true,
       });
     }
   };
