@@ -163,7 +163,7 @@ const Routers = () => {
       <Route path="/lod/digital_signature_lod/final_riminder/sup_fr_log" element={<ProtectedRoute element={<Sup_FR_Log />} allowedRoles={['superadmin']} />} />
       <Route path="/lod/Sup_LOD_Log" element={<ProtectedRoute element={<Sup_LOD_Log />} allowedRoles={['superadmin']} />} />
 
-      {/* config */} allowedRoles={['superadmin']} />}
+      {/* config */}
       <Route path="/config" element={<ProtectedRoute element={<Config />} allowedRoles={['superadmin']} />} />
       <Route path="/config/regi-drc" element={<ProtectedRoute element={<RegDrc />} allowedRoles={['superadmin']} />} />
       <Route path="/config/edit-drc" element={<ProtectedRoute element={<EditDRC />} allowedRoles={['superadmin']} />} />
