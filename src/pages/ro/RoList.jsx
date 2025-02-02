@@ -73,15 +73,19 @@ const ROList = () => {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesStatus =
-      status === "" ||
-      getLastStatus(row.ro_status).toLowerCase() === status.toLowerCase();
+      appliedFilters.status === "" ||
+      getLastStatus(row.ro_status).toLowerCase() ===
+        appliedFilters.status.toLowerCase();
+    const matchesDRC =
+      appliedFilters.drc === "" ||
+      row.drc_name.toLowerCase() === appliedFilters.drc.toLowerCase();
 
-    return matchesSearchQuery && matchesStatus;
+    return matchesSearchQuery && matchesStatus && matchesDRC;
   });
 
   const handleFilter = () => {
-    setAppliedFilters({ status, selectedDRC });
-    setCurrentPage(0);
+    setAppliedFilters({ status, drc: selectedDRC });
+    setCurrentPage(0); // Reset to the first page when filtering
   };
 
   const pages = Math.ceil(filteredData.length / rowsPerPage);
@@ -99,23 +103,10 @@ const ROList = () => {
 
   const handleStatusChange = (status) => {
     setStatus(status || "");
-    setCurrentPage(0);
   };
 
   const handleDRCChange = (e) => {
-    const selected = e.target.value;
-    setSelectedDRC(selected);
-    
-    if (selected === "") {
-      // If "Select DRC" is chosen, reset to fetch all recovery officers
-      setRequestDrcId(null);
-    } else {
-      // Find the selected DRC by name and set its ID
-      const selectedDrc = drcArray.find((drc) => drc.name === selected);
-      if (selectedDrc) {
-        setRequestDrcId(selectedDrc.id);
-      }
-    }
+    setSelectedDRC(e.target.value);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -143,21 +134,21 @@ const ROList = () => {
             <option value="">Select Status</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
-            <option value="Terminate">Inactive</option>
+            <option value="Terminate">Terminate</option>
           </select>
 
           <select
-          className={GlobalStyle.selectBox}
-          value={selectedDRC}
-          onChange={handleDRCChange}
-        >
-          <option value="">Select DRC</option>
-          {drcArray.map((drc) => (
-            <option key={drc.id} value={drc.name}>
-              {drc.name}
-            </option>
-          ))}
-        </select>
+            className={GlobalStyle.selectBox}
+            value={selectedDRC}
+            onChange={handleDRCChange}
+          >
+            <option value="">Select DRC</option>
+            {drcArray.map((drc) => (
+              <option key={drc.id} value={drc.name}>
+                {drc.name}
+              </option>
+            ))}
+          </select>
 
           <button
             onClick={handleFilter}
@@ -187,29 +178,50 @@ const ROList = () => {
         <table className={GlobalStyle.table}>
           <thead className={GlobalStyle.thead}>
             <tr>
-              <th scope="col" className={GlobalStyle.tableHeader}>RO ID</th>
-              <th scope="col" className={GlobalStyle.tableHeader}>Status</th>
-              <th scope="col" className={GlobalStyle.tableHeader}>DRC Name</th>
-              <th scope="col" className={GlobalStyle.tableHeader}>RO Name</th>
-              <th scope="col" className={GlobalStyle.tableHeader}>Contact No.</th>
-              <th scope="col" className={GlobalStyle.tableHeader}>RTOM Area count</th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                RO ID
+              </th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                Status
+              </th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                DRC Name
+              </th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                RO Name
+              </th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                Contact No.
+              </th>
+              <th scope="col" className={GlobalStyle.tableHeader}>
+                RTOM Area count
+              </th>
               <th scope="col" className={GlobalStyle.tableHeader}></th>
             </tr>
           </thead>
           <tbody>
             {paginatedData.map((ro, index) => (
-              <tr key={ro.ro_id} 
-              className={`${
-                index % 2 === 0
-                  ? "bg-white bg-opacity-75"
-                  : "bg-gray-50 bg-opacity-50"
-              } border-b`}
-            >
+              <tr
+                key={ro.ro_id}
+                className={`${
+                  index % 2 === 0
+                    ? "bg-white bg-opacity-75"
+                    : "bg-gray-50 bg-opacity-50"
+                } border-b`}
+              >
                 <td className={GlobalStyle.tableData}>{ro.ro_id}</td>
                 <td className={GlobalStyle.tableData}>
                   <div className="flex items-center justify-center gap-2">
                     <img
-                      src={getLastStatus(ro.ro_status) === "Active" ? activeIcon : (ro.ro_status) === "Inactive" ?deactiveIcon : terminatedIcon}
+                      src={
+                        getLastStatus(ro.ro_status) === "Active"
+                          ? activeIcon
+                          : getLastStatus(ro.ro_status) === "Inactive"
+                          ? deactiveIcon
+                          : getLastStatus(ro.ro_status) === "Terminate"
+                          ? terminatedIcon
+                          : deactiveIcon // Fallback to deactiveIcon if status is unknown
+                      }
                       alt={getLastStatus(ro.ro_status)}
                       className="w-5 h-5"
                       title={getLastStatus(ro.ro_status)}
@@ -219,11 +231,17 @@ const ROList = () => {
                 <td className={GlobalStyle.tableData}>{ro.drc_name}</td>
                 <td className={GlobalStyle.tableData}>{ro.ro_name}</td>
                 <td className={GlobalStyle.tableData}>{ro.ro_contact_no}</td>
-                <td className={GlobalStyle.tableData}>{ro.rtoms_for_ro?.length || 0}</td>
+                <td className={GlobalStyle.tableData}>
+                  {ro.rtoms_for_ro?.length || 0}
+                </td>
                 <td className={GlobalStyle.tableData}>
                   <div className="flex gap-4">
                     <Link to={`/config/ro-details/${ro.ro_id}`}>
-                      <img src={more_info} alt="More Info" className="w-6 h-6" />
+                      <img
+                        src={more_info}
+                        alt="More Info"
+                        className="w-6 h-6"
+                      />
                     </Link>
                   </div>
                 </td>
@@ -243,13 +261,21 @@ const ROList = () => {
       {/* Pagination */}
       {filteredData.length > rowsPerPage && (
         <div className={GlobalStyle.navButtonContainer}>
-          <button className={GlobalStyle.navButton} onClick={handlePrevPage} disabled={currentPage === 0}>
+          <button
+            className={GlobalStyle.navButton}
+            onClick={handlePrevPage}
+            disabled={currentPage === 0}
+          >
             <FaArrowLeft />
           </button>
           <span>
             Page {currentPage + 1} of {pages}
           </span>
-          <button className={GlobalStyle.navButton} onClick={handleNextPage} disabled={currentPage === pages - 1}>
+          <button
+            className={GlobalStyle.navButton}
+            onClick={handleNextPage}
+            disabled={currentPage === pages - 1}
+          >
             <FaArrowRight />
           </button>
         </div>
@@ -259,6 +285,3 @@ const ROList = () => {
 };
 
 export default ROList;
-
-
-

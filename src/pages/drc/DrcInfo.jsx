@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
-import {
-  getDrcDetailsWithServicesById,
-  getRemarkDetailsByDRCId,
-} from "../../services/drc/DRCService";
+import { getDrcDetailsWithServicesById, getRemarkDetailsByDRCId, } from "../../services/drc/DRCService";
 import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
 import deactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
 import edit_info from "../../assets/images/edit-info.svg";
@@ -84,12 +81,12 @@ const DrcInfo = () => {
 
   return (
     <div className={GlobalStyle.fontPoppins}>
-      <h1 className={GlobalStyle.headingLarge}>More Info {drcDetails?.drc_name || "Loading..."}</h1>
-      
+      <h1 className={GlobalStyle.headingLarge}>
+        More Info {drcDetails?.drc_name || "Loading..."}
+      </h1>
 
       <div className="flex w-full justify-center">
         <div className={`${GlobalStyle.cardContainer} p-4`}>
-         
           <div className="flex justify-end">
             <button
               onClick={() =>
@@ -296,7 +293,12 @@ const DrcInfo = () => {
           </div>
         </div>
       )}
-      
+      {/* Back Button */}
+      <div className="flex justify-start mt-4">
+        <Link to={`/config/drc-list`}>
+          <button className={`${GlobalStyle.buttonPrimary}`}>Back</button>
+        </Link>
+      </div>
     </div>
   );
 };
