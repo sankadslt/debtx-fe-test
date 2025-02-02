@@ -55,7 +55,13 @@ const RoEnd = () => {
     }
 
     try {
-      await SuspendRO(roId, remark);
+      const payload = {
+        roId,
+        remark,
+        remark_edit_by: "AdminUser",
+        ro_end_date: endDate,
+      };
+      await SuspendRO(payload);
       Swal.fire({
         icon: "success",
         title: "Success",
@@ -63,6 +69,8 @@ const RoEnd = () => {
         confirmButtonColor: "#28a745",
       }).then(() =>
          navigate("/config/ro-list"));
+      setRemark("");
+      setEndDate("");
     } catch (error) {
       Swal.fire({
         icon: "error",
