@@ -116,7 +116,7 @@ const RecoveryOfficerForm = () => {
     const requestData = {
       ro_name: ROName,
       ro_contact_no: contactNumber,
-      drc_id: 137, 
+      drc_id: 2, 
       login_type: loginMethod,
       login_user_id: accountDetails,
       ro_nic: RONIC,
