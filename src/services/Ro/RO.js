@@ -3,24 +3,30 @@ import axios from "axios"
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const URL = `${BASE_URL}/recovery_officer`;
 
-export const SuspendRO = async (roId,remark) => {
-    try {
-        const response = await axios.patch(`${URL}/Suspend_RO`,{
-            ro_id:roId,
-            ro_remark:remark
-        });
+export const SuspendRO = async ({roId,remark,ro_end_date,remark_edit_by}) => {
+  const apiUrl = `${URL}/Suspend_RO`;
+  try {
+    const response = await axios.patch(apiUrl, {
+      ro_id:roId,
+      remark:remark,
+      remark_edit_by:remark_edit_by,
+      ro_end_date:ro_end_date
+    });
 
-        if (response.data.status === 'success') {
-            return response.data;
-        }
-        else{
-            console.error(response.data.message);
-            throw new Error(response.data.message);
-        }
-    } catch (error) {
-        console.error("Error suspending Ro:", error.message);
-        throw error;
+    const result = response.data;
+
+    if (result.status === "success" && result.data) {
+      return result.data;
+    } else {
+      console.error(response.data.message);
+      throw new Error("Invalid API response format.");
     }
+  } catch (error) {
+    console.error("Error suspending Ro:", error.message);
+    throw new Error(
+      `Failed to end DRC: ${error.response?.data?.message || error.message}`
+    );
+  }
 };
 
 export const GetRODetailsByID = async (roId) => {
