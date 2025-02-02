@@ -61,7 +61,7 @@ const RTomEditDetails = () => {
       return;
     }
 
-    if (telephoneNo.length > 10 || faxNo.length > 10) {
+    if (telephoneNo.length !== 10 || faxNo.length !== 10) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
