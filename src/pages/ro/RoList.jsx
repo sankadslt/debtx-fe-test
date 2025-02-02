@@ -73,15 +73,17 @@ const ROList = () => {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesStatus =
-      status === "" ||
-      getLastStatus(row.ro_status).toLowerCase() === status.toLowerCase();
+      appliedFilters.status === "" ||
+      getLastStatus(row.ro_status).toLowerCase() === appliedFilters.status.toLowerCase();
+    const matchesDRC =
+      appliedFilters.drc === "" || row.drc_name.toLowerCase() === appliedFilters.drc.toLowerCase();
 
-    return matchesSearchQuery && matchesStatus;
+    return matchesSearchQuery && matchesStatus && matchesDRC;
   });
 
   const handleFilter = () => {
-    setAppliedFilters({ status, selectedDRC });
-    setCurrentPage(0);
+    setAppliedFilters({ status, drc: selectedDRC });
+    setCurrentPage(0); // Reset to the first page when filtering
   };
 
   const pages = Math.ceil(filteredData.length / rowsPerPage);
@@ -99,23 +101,10 @@ const ROList = () => {
 
   const handleStatusChange = (status) => {
     setStatus(status || "");
-    setCurrentPage(0);
   };
 
   const handleDRCChange = (e) => {
-    const selected = e.target.value;
-    setSelectedDRC(selected);
-    
-    if (selected === "") {
-      // If "Select DRC" is chosen, reset to fetch all recovery officers
-      setRequestDrcId(null);
-    } else {
-      // Find the selected DRC by name and set its ID
-      const selectedDrc = drcArray.find((drc) => drc.name === selected);
-      if (selectedDrc) {
-        setRequestDrcId(selectedDrc.id);
-      }
-    }
+    setSelectedDRC(e.target.value);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -143,21 +132,21 @@ const ROList = () => {
             <option value="">Select Status</option>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
-            <option value="Terminate">Inactive</option>
+            <option value="Terminate">Terminate</option>
           </select>
 
           <select
-          className={GlobalStyle.selectBox}
-          value={selectedDRC}
-          onChange={handleDRCChange}
-        >
-          <option value="">Select DRC</option>
-          {drcArray.map((drc) => (
-            <option key={drc.id} value={drc.name}>
-              {drc.name}
-            </option>
-          ))}
-        </select>
+            className={GlobalStyle.selectBox}
+            value={selectedDRC}
+            onChange={handleDRCChange}
+          >
+            <option value="">Select DRC</option>
+            {drcArray.map((drc) => (
+              <option key={drc.id} value={drc.name}>
+                {drc.name}
+              </option>
+            ))}
+          </select>
 
           <button
             onClick={handleFilter}
@@ -259,6 +248,3 @@ const ROList = () => {
 };
 
 export default ROList;
-
-
-
