@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import GlobalStyle from "../../assets/prototype/GlobalStyle";
-import {
-  getDrcDetailsWithServicesById,
-  getRemarkDetailsByDRCId,
-} from "../../services/drc/DRCService";
+import { getDrcDetailsWithServicesById, getRemarkDetailsByDRCId, } from "../../services/drc/DRCService";
 import activeIcon from "../../assets/images/DRC/Status_DRC list/Active.png";
 import deactiveIcon from "../../assets/images/DRC/Status_DRC list/Inactive.png";
 import edit_info from "../../assets/images/edit-info.svg";
