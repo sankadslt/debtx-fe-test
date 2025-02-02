@@ -22,6 +22,10 @@
         return; 
       }
 
+      let updatedValue = value.replace(/[^0-9]/g, '');
+      if (updatedValue.length > 10) return;
+ 
+
       setFormData({
         ...formData,
         [name]: value,
@@ -40,7 +44,7 @@
         return;
       }
 
-      if (formData.rtom_contact_number.length > 10) {
+      if (formData.rtom_contact_number.length !== 10) {
         Swal.fire({
           icon: "warning",
           title: "Warning",
