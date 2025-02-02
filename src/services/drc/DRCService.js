@@ -111,7 +111,7 @@ export const endDRC = async ({ drc_id, drc_end_dat, remark, remark_edit_by }) =>
 
 export const getRemarkDetailsByDRCId = async (drcId) => {
   try {
-    const response = await axios.post(`${URL}/Remark_Details_By_DRC_Id`, {
+    const response = await axios.post(`${URL}/DRC_Remark_Details_By_ID`, {
       drc_id: drcId,
     });
 

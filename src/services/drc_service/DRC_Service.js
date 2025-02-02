@@ -34,7 +34,7 @@ export const assignServiceToDrc = async (drcId, serviceId) => {
 
   export const manageDrcDetails = async (payload) => {
     try {
-      const response = await axios.post(`${URL}/manageDRC`, payload);
+      const response = await axios.post(`${URL}/Change_DRC_Details_with_Services`, payload);
       return response.data;
     } catch (error) {
       console.error("Error managing DRC details:", error);
